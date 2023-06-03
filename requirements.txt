@@ -1,0 +1,6 @@
+opencv-contrib-python-headless
+streamlit==0.81.1
+torch
+torchvision
+requests
+yolov7
