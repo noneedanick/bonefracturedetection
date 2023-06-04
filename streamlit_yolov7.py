@@ -161,7 +161,7 @@ if __name__=='__main__':
     app=Streamlit_YOLOV7()
 
     #INPUTS for YOLOV7
-    img_size=1056
+    img_size=2560
     path_yolov7_weights="weights/best.pt"
     path_img_i="https://github.com/noneedanick/bonefracturedetection/blob/main/test_images/fracture_elbow.jpg?raw=true"
     #INPUTS for webapp
