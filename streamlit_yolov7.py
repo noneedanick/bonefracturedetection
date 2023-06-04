@@ -116,7 +116,7 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
         self.img_screen=Image.open(BytesIO(self.response.content))
 
         st.image(self.img_screen, caption=self.capt, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
-        st.markdown(':green[Bone fracture detection with YoloV7 with a web application.]')
+        st.markdown('**:green[Bone fracture detection with YoloV7 with a web application.]**')
         self.im0=np.array(self.img_screen.convert('RGB'))
         self.load_image_st()
         predictions = st.button(':green[Predict on the image!]')
@@ -125,7 +125,7 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
             predictions=False
 
     def load_image_st(self):
-        uploaded_img=st.file_uploader(label=':red[Upload an image]')
+        uploaded_img=st.file_uploader(label='**:red[Upload an image]**')
         if type(uploaded_img) != type(None):
             self.img_data=uploaded_img.getvalue()
             st.image(self.img_data)
@@ -165,7 +165,7 @@ if __name__=='__main__':
     path_yolov7_weights="weights/best.pt"
     path_img_i="https://github.com/noneedanick/bonefracturedetection/blob/main/test_images/fracture_elbow.jpg?raw=true"
     #INPUTS for webapp
-    app.capt=":green[Test Image]"
+    app.capt="Test Image"
     app.new_yolo_model(img_size,path_yolov7_weights,path_img_i)
     app.conf_thres=0.05
     
