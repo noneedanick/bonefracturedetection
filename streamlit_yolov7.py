@@ -1,5 +1,3 @@
-import singleinference_yolov7
-from singleinference_yolov7 import SingleInference_YOLOV7
 import os
 import streamlit as st
 import logging
@@ -8,163 +6,119 @@ from PIL import Image
 from io import BytesIO
 import numpy as np
 import cv2
-class Streamlit_YOLOV7(SingleInference_YOLOV7):
-    '''
-    streamlit app that uses yolov7
-    '''
-    def __init__(self,):
-        self.logging_main=logging
-        self.logging_main.basicConfig(level=self.logging_main.DEBUG)
-    
-    
-    def new_yolo_model(self,img_size,path_yolov7_weights,path_img_i,device_i='cpu'):
-        '''
-        SimpleInference_YOLOV7
-        created by Steven Smiley 2022/11/24
+import sys
+import torch
+import random
+from utils.general import check_img_size, non_max_suppression, scale_coords
+from utils.torch_utils import select_device
+from models.experimental import attempt_load
 
-        INPUTS:
-        VARIABLES                    TYPE    DESCRIPTION
-        1. img_size,                    #int#   #this is the yolov7 model size, should be square so 640 for a square 640x640 model etc.
-        2. path_yolov7_weights,         #str#   #this is the path to your yolov7 weights 
-        3. path_img_i,                  #str#   #path to a single .jpg image for inference (NOT REQUIRED, can load cv2matrix with self.load_cv2mat())
+@st.cache_resource
+def load_model():
+    device = select_device('0')
+    model = attempt_load('weights/best.pt', map_location=device)
+    return model
 
-        OUTPUT:
-        VARIABLES                    TYPE    DESCRIPTION
-        1. predicted_bboxes_PascalVOC   #list#  #list of values for detections containing the following (name,x0,y0,x1,y1,score)
+def detect(model, img0, conf_thres=0.05, iou_thres=0.45, classes=None, agnostic_nms=False):
+    img = img0.copy()
+    img = check_img_size(img, s=model.stride.max())  # check img size
+    img = torch.from_numpy(img).to('cuda')
+    img = img.float()  # uint8 to fp16/32
+    img /= 255.0  # 0 - 255 to 0.0 - 1.0
+    if img.ndimension() == 3:
+        img = img.unsqueeze(0)
+    pred = model(img, augment=False)[0]
+    pred = non_max_suppression(pred, conf_thres, iou_thres, classes=classes, agnostic=agnostic_nms)
+    return pred
 
-        CREDIT
-        Please see https://github.com/WongKinYiu/yolov7.git for Yolov7 resources (i.e. utils/models)
-        @article{wang2022yolov7,
-            title={{YOLOv7}: Trainable bag-of-freebies sets new state-of-the-art for real-time object detectors},
-            author={Wang, Chien-Yao and Bochkovskiy, Alexey and Liao, Hong-Yuan Mark},
-            journal={arXiv preprint arXiv:2207.02696},
-            year={2022}
-            }
-        
-        '''
-        super().__init__(img_size,path_yolov7_weights,path_img_i,device_i=device_i)
-    def main(self):
-        st.title('Custom YoloV7 Object Detector')
-        st.subheader(""" Upload an image and run YoloV7 on it.  
-        This model was trained to detect bone fractures on appendicular skeleton X-ray images. 
-        The model should be used with caution. It should not be used for medical decision making without an examination from expert radiologist.:\n""")
-        st.markdown(
-            """
+def draw_boxes(img, pred, names):
+    for i, det in enumerate(pred):  # detections per image
+        if len(det):
+            det[:, :4] = scale_coords(img.shape[2:], det[:, :4], img.shape).round()
+            for *xyxy, conf, cls in reversed(det):
+                label = f'{names[int(cls)]} {conf:.2f}'
+                plot_one_box(xyxy, img, label=label, color=colors[int(cls)], line_thickness=3)
+    return img
+
+def plot_one_box(x, img, color=None, label=None, line_thickness=None):
+    tl = line_thickness or round(0.002 * (img.shape[0] + img.shape[1]) / 2) + 1  # line/font thickness
+    c1, c2 = (int(x[0]), int(x[1])), (int(x[2]), int(x[3]))
+    cv2.rectangle(img, c1, c2, color, thickness=tl, lineType=cv2.LINE_AA)
+    if label:
+        tf = max(tl - 1, 1)  # font thickness
+        t_size = cv2.getTextSize(label, 0, fontScale=tl / 3, thickness=tf)[0]
+        c2 = c1[0] + t_size[0], c1[1] - t_size[1] - 3
+        cv2.rectangle(img, c1, c2, color, -1, cv2.LINE_AA)  # filled
+        cv2.putText(img, label, (c1[0], c1[1] - 2), 0, tl / 3, [255, 255, 255], thickness=tf, lineType=cv2.LINE_AA)
+
+@st.cache
+def load_image(image_file):
+    img = Image.open(image_file)
+    return img
+
+def main():
+
+    # Add background image from https://c1.wallpaperflare.com/path/664/562/389/xray-doctor-surgeon-hospital-6d9c961c8b0f6f38964e02f9526720e8.jpg
+    st.markdown(
+        """
         <style>
-        .reportview-container .markdown-text-container {
-            font-family: monospace;
+        .reportview-container {
+            background: url("https://c1.wallpaperflare.com/path/664/562/389/xray-doctor-surgeon-hospital-6d9c961c8b0f6f38964e02f9526720e8.jpg")
         }
         .sidebar .sidebar-content {
-            background-image: linear-gradient(#2e7bcf,#2e7bcf);
-            color: black;
+            background: url("https://c1.wallpaperflare.com/path/664/562/389/xray-doctor-surgeon-hospital-6d9c961c8b0f6f38964e02f9526720e8.jpg")
         }
-        .Widget>label {
-            color: green;
-            font-family: monospace;
-        }
-        [class^="st-b"]  {
-            color: green;
-            font-family: monospace;
-        }
-        .st-bb {
-            background-color: black;
-        }
-        .st-at {
-            background-color: green;
-        }
-        footer {
-            font-family: monospace;
-        }
-        .reportview-container .main footer, .reportview-container .main footer a {
-            color: black;
-        }
-        header .decoration {
-            background-image: None);
-        }
-
-
         </style>
         """,
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            """
-            <style>
-            .reportview-container {
-                background: url("https://c1.wallpaperflare.com/path/664/562/389/xray-doctor-surgeon-hospital-6d9c961c8b0f6f38964e02f9526720e8.jpg")
-            }
-        .sidebar .sidebar-content {
-                background: url("https://c1.wallpaperflare.com/path/664/562/389/xray-doctor-surgeon-hospital-6d9c961c8b0f6f38964e02f9526720e8.jpg")
-            }
-            </style>
-            """,
-            unsafe_allow_html=True
-        )
-        text_i_list=[]
-        for i,name_i in enumerate(self.names):
-            #text_i_list.append(f'id={i} \t \t name={name_i}\n')
-            text_i_list.append(f'{i}: {name_i}\n')
-        st.selectbox('Classes',tuple(text_i_list))
-        self.conf_selection=st.selectbox('Confidence Threshold',tuple([0.05,0.1,0.15,0.25,0.40]))
-        
-        self.response=requests.get(self.path_img_i)
+        unsafe_allow_html=True
+    )
 
-        self.img_screen=Image.open(BytesIO(self.response.content))
-
-        st.image(self.img_screen, caption=self.capt, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
-        st.markdown('YoloV7 on streamlit.  Demo of object detection with YoloV7 with a web application.')
-        self.im0=np.array(self.img_screen.convert('RGB'))
-        self.load_image_st()
-        predictions = st.button('Predict on the image?')
-        if predictions:
-            self.predict()
-            predictions=False
-
-    def load_image_st(self):
-        uploaded_img=st.file_uploader(label='Upload an image')
-        if type(uploaded_img) != type(None):
-            self.img_data=uploaded_img.getvalue()
-            st.image(self.img_data)
-            self.im0=Image.open(BytesIO(self.img_data))#.convert('RGB')
-            self.im0=np.array(self.im0)
-
-            return self.im0
-        elif type(self.im0) !=type(None):
-            return self.im0
-        else:
-            return None
+    st.title("Bone Fracture Detection in X-Ray Images")
+    st.markdown("This app uses a **YOLOv7E6** model trained on a custom dataset to detect fractures in X-ray images.")
+    st.markdown("### Upload your image")
+    st.markdown("Please upload an image and click the **Detect** button to detect objects in the image.")
+    st.markdown("### Or use an example image")
+    st.markdown("Click the **Detect** button to detect objects in the image.")
+    st.markdown("### Detected objects")
+    st.markdown("The detected objects are shown in the image below.")
     
-    def predict(self):
-        self.conf_thres=self.conf_selection
-        st.write('Loading image')
-        self.load_cv2mat(self.im0)
-        st.write('Making inference')
-        self.inference()
+    # Load model
+    model = load_model()
 
-        self.img_screen=Image.fromarray(self.image).convert('RGB')
-        
-        self.capt='DETECTED:'
-        if len(self.predicted_bboxes_PascalVOC)>0:
-            for item in self.predicted_bboxes_PascalVOC:
-                name=str(item[0])
-                conf=str(round(100*item[-1],2))
-                self.capt=self.capt+ ' name='+name+' confidence='+conf+'%, '
-        st.image(self.img_screen, caption=self.capt, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
-        self.image=None
+    # Load class names
+    names = model.module.names if hasattr(model, 'module') else model.names
     
-
-if __name__=='__main__':
-    app=Streamlit_YOLOV7()
-
-    #INPUTS for YOLOV7
-    img_size=1056
-    path_yolov7_weights="weights/best.pt"
-    path_img_i="https://github.com/noneedanick/bonefracturedetection/blob/main/test_images/fracture_elbow.jpg?raw=true"
-    #INPUTS for webapp
-    app.capt="Initial Image"
-    app.new_yolo_model(img_size,path_yolov7_weights,path_img_i)
-    app.conf_thres=0.65
-    app.load_model() #Load the yolov7 model
+    # Load example images
+    example_images = []
+    for filename in os.listdir('test_images'):
+        example_images.append(os.path.join('images', filename))
     
-    app.main()
+    # Select image source from sidebar
+    image_source = st.sidebar.radio("Select image source:", ("Upload image", "Example image"))
+    
+    # Detect objects in image and show original and annotated image in main window
+   
+    if image_source == "Upload image":
+        image_file = st.file_uploader("Upload image", type=["jpg", "jpeg", "png"])
+        if image_file is not None:
+            img = load_image(image_file)
+            img = np.array(img)
+            pred = detect(model, img)
+            img = draw_boxes(img, pred, names)
+            st.image(img, use_column_width=True)
+    else:
+        image_file = st.selectbox("Select image:", example_images)
+        img = load_image(image_file)
+        img = np.array(img)
+        pred = detect(model, img)
+        img = draw_boxes(img, pred, names)
+        st.image(img, use_column_width=True)
+    
+    # Display class names
+    st.markdown("### Class names")
+    st.markdown("The following objects can be detected:")
+    st.markdown(names)
+
+ if __name__ == "__main__":
+    main()
 
