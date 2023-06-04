@@ -127,8 +127,8 @@ class SingleInference_YOLOV7:
         if type(self.im0)!=type(None):
             self.img=self.im0.copy()    
             self.imn = cv2.cvtColor(self.im0, cv2.COLOR_BGR2RGB)
-            clahe = cv2.createCLAHE(clipLimit=7,tileGridSize=Size(11, 11))
-            self.imn = clahe.apply(self.imn)
+            #clahe = cv2.createCLAHE(clipLimit=7,tileGridSize=Size(11, 11))
+            #self.imn = clahe.apply(self.imn)
             self.img=self.imn.copy()
             image = self.img.copy()
             image, self.ratio, self.dwdh = self.letterbox(image,auto=False)
