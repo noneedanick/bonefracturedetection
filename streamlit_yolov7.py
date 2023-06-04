@@ -119,6 +119,6 @@ def main():
     st.markdown("The following objects can be detected:")
     st.markdown(names)
 
- if __name__ == "__main__":
+if __name__ == "__main__":
     main()
 
