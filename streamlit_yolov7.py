@@ -16,7 +16,7 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
         self.logging_main=logging
         self.logging_main.basicConfig(level=self.logging_main.DEBUG)
     
-    @st.cache
+    
     def new_yolo_model(self,img_size,path_yolov7_weights,path_img_i,device_i='cpu'):
         '''
         SimpleInference_YOLOV7

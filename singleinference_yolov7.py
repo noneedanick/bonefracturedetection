@@ -70,7 +70,7 @@ class SingleInference_YOLOV7:
         self.logging.basicConfig(level=self.logging.DEBUG)
 
 
-
+    @st.cache
     def load_model(self):
         '''
         Loads the yolov7 model
