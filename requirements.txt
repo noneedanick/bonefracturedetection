@@ -1,5 +1,5 @@
 opencv-contrib-python-headless
-streamlit==0.81.1
+streamlit>=1.11.1
 torch
 torchvision
 requests
