@@ -96,10 +96,10 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
             """
             <style>
             .reportview-container {
-                background: url("https://c1.wallpaperflare.com/path/664/562/389/xray-doctor-surgeon-hospital-6d9c961c8b0f6f38964e02f9526720e8.jpg")
+                background: url("https://github.com/noneedanick/bonefracturedetection/blob/main/background.jpg?raw=true")
             }
         .sidebar .sidebar-content {
-                background: url("https://c1.wallpaperflare.com/path/664/562/389/xray-doctor-surgeon-hospital-6d9c961c8b0f6f38964e02f9526720e8.jpg")
+                background: url("https://github.com/noneedanick/bonefracturedetection/blob/main/background.jpg?raw=true")
             }
             </style>
             """,
