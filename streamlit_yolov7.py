@@ -15,7 +15,10 @@ from models.experimental import attempt_load
 
 @st.cache_resource
 def load_model():
-    device = select_device('0')
+    if torch.cuda.is_available():
+        device = select_device('0')
+    else:
+        device = select_device('cpu')
     model = attempt_load('weights/best.pt', map_location=device)
     return model
 
