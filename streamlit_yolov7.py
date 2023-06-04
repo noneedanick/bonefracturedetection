@@ -95,7 +95,7 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
         st.markdown(
             """
             <style>
-            body {
+            .stApp {
             background-image: url("https://github.com/noneedanick/bonefracturedetection/blob/main/background.jpg?raw=true");
             background-size: cover;
             }
