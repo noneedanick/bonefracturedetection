@@ -94,7 +94,7 @@ def main():
     # Load example images
     example_images = []
     for filename in os.listdir('test_images'):
-        example_images.append(os.path.join('images', filename))
+        example_images.append(os.path.join('test_images', filename))
     
     # Select image source from sidebar
     image_source = st.sidebar.radio("Select image source:", ("Upload image", "Example image"))
