@@ -95,14 +95,13 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
         st.markdown(
             """
             <style>
-            .reportview-container {
-                background: url("https://github.com/noneedanick/bonefracturedetection/blob/main/background.jpg?raw=true")
-            }
-        .sidebar .sidebar-content {
-                background: url("https://github.com/noneedanick/bonefracturedetection/blob/main/background.jpg?raw=true")
+            body {
+            background-image: url("https://github.com/noneedanick/bonefracturedetection/blob/main/background.jpg?raw=true");
+            background-size: cover;
             }
             </style>
-            """,
+            """
+            ,
             unsafe_allow_html=True
         )
         text_i_list=[]
