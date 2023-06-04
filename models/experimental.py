@@ -1,6 +1,7 @@
 import numpy as np
 import torch
 import torch.nn as nn
+import streamlit as st
 
 from models.common import Conv, DWConv
 from utils.google_utils import attempt_download
@@ -79,7 +80,7 @@ class Ensemble(nn.ModuleList):
         y = torch.cat(y, 1)  # nms ensemble
         return y, None  # inference, train output
 
-
+@st.cache_resource
 def attempt_load(weights, map_location=None):
     # Loads an ensemble of models weights=[a,b,c] or a single model weights=[a] or weights=a
     model = Ensemble()
