@@ -6,23 +6,21 @@ import sys
 import torch
 import cv2
 import logging
-import streamlit as st
-#
+
+
 
 class SingleInference_YOLOV7:
     '''
-    SimpleInference_YOLOV7
-    created by Steven Smiley 2022/11/24
 
     INPUTS:
-       VARIABLES                    TYPE    DESCRIPTION
-    1. img_size,                    #int#   #this is the yolov7 model size, should be square so 640 for a square 640x640 model etc.
-    2. path_yolov7_weights,         #str#   #this is the path to your yolov7 weights 
-    3. path_img_i,                  #str#   #path to a single .jpg image for inference (NOT REQUIRED, can load cv2matrix with self.load_cv2mat())
+     
+    img_size,                    #int#   #this is the yolov7 model size, should be square so 640 for a square 640x640 model etc.
+    path_yolov7_weights,         #str#   #this is the path to your yolov7 weights 
+    path_img_i,                  #str#   #path to a single .jpg image for inference (NOT REQUIRED, can load cv2matrix with self.load_cv2mat())
 
     OUTPUT:
-       VARIABLES                    TYPE    DESCRIPTION
-    1. predicted_bboxes_PascalVOC   #list#  #list of values for detections containing the following (name,x0,y0,x1,y1,score)
+     
+    predicted_bboxes_PascalVOC   #list#  #list of values for detections containing the following (name,x0,y0,x1,y1,score)
 
     CREDIT
     Please see https://github.com/WongKinYiu/yolov7.git for Yolov7 resources (i.e. utils/models)
@@ -129,6 +127,8 @@ class SingleInference_YOLOV7:
         if type(self.im0)!=type(None):
             self.img=self.im0.copy()    
             self.imn = cv2.cvtColor(self.im0, cv2.COLOR_BGR2RGB)
+            clahe = cv2.createCLAHE(clipLimit=7,tileGridSize=Size(11, 11))
+            self.imn = clahe.apply(self.imn)
             self.img=self.imn.copy()
             image = self.img.copy()
             image, self.ratio, self.dwdh = self.letterbox(image,auto=False)
