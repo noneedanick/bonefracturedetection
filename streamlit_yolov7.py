@@ -13,7 +13,7 @@ import cv2
 
 class Streamlit_YOLOV7(SingleInference_YOLOV7):
     '''
-    streamlit app that uses yolov7
+    Streamlit app for bone fracture detection in X-ray images
     '''
     def __init__(self,):
         self.logging_main=logging
@@ -23,18 +23,14 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
 
     def new_yolo_model(self,img_size,path_yolov7_weights,path_img_i,device_i='cpu'):
         '''
-        SimpleInference_YOLOV7
-        created by Steven Smiley 2022/11/24
-
+        
         INPUTS:
-        VARIABLES                    TYPE    DESCRIPTION
-        1. img_size,                    #int#   #this is the yolov7 model size, should be square so 640 for a square 640x640 model etc.
-        2. path_yolov7_weights,         #str#   #this is the path to your yolov7 weights 
-        3. path_img_i,                  #str#   #path to a single .jpg image for inference (NOT REQUIRED, can load cv2matrix with self.load_cv2mat())
+        img_size,                 #int#   #this is the yolov7 model size, should be square so 640 for a square 640x640 model etc.
+        path_yolov7_weights,      #str#   #this is the path to your yolov7 weights 
+        path_img_i,               #str#   #path to a single .jpg image for inference (NOT REQUIRED, can load cv2matrix with self.load_cv2mat())
 
         OUTPUT:
-        VARIABLES                    TYPE    DESCRIPTION
-        1. predicted_bboxes_PascalVOC   #list#  #list of values for detections containing the following (name,x0,y0,x1,y1,score)
+        predicted_bboxes_PascalVOC   #list#  #list of values for detections containing the following (name,x0,y0,x1,y1,score)
 
         CREDIT
         Please see https://github.com/WongKinYiu/yolov7.git for Yolov7 resources (i.e. utils/models)
@@ -50,9 +46,9 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
     def main(self):
         st.title(':red[Bone Fracture Detection in Appendicular X-Ray Images]')
         st.subheader(""" :red[Upload an image and run model on it.]  
-        This model was trained to detect bone fractures on appendicular skeleton X-ray images. 
+        This model was trained to detect bone fractures on \nappendicular skeleton X-ray images. 
         The model should be used with caution. 
-        It should not be used for medical decision making without an examination from expert radiologist.:\n""")
+        It should not be used for medical decision making \nwithout an examination from expert radiologist\n""")
         st.markdown(
             """
         <style>
