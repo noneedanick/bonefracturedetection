@@ -6,6 +6,7 @@ import sys
 import torch
 import cv2
 import logging
+import streamlit as st
 #
 
 class SingleInference_YOLOV7:
