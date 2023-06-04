@@ -116,7 +116,7 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
         self.img_screen=Image.open(BytesIO(self.response.content))
 
         st.image(self.img_screen, caption=self.capt, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
-        st.markdown('**:green[Bone fracture detection with YoloV7 with a web application.]**')
+        st.markdown('**:red[Bone fracture detection with YoloV7 with a web application.]**')
         self.im0=np.array(self.img_screen.convert('RGB'))
         self.load_image_st()
         predictions = st.button(':green[Predict on the image!]')
