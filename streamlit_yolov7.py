@@ -46,9 +46,12 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
     def main(self):
         st.title(':red[Bone Fracture Detection in Appendicular X-Ray Images]')
         st.subheader(""" :red[Upload an image and run model on it.]""")
-        st.markdown("""**:green[This model was trained to detect bone fractures on \nappendicular skeleton X-ray images. 
-        The model should be used with caution. 
-        It should not be used for medical decision making \nwithout an opinion from an expert radiologist\n]**""")
+        with st.sidebar:
+            st.markdown("""**:green[This model was trained to detect bone fractures on \n
+            appendicular skeleton X-ray images. \n
+            The model should be used with caution. \n
+            It should not be used for medical decision making \n
+            without an opinion from an expert radiologist.]**""")
         st.markdown(
             """
         <style>
@@ -92,7 +95,7 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
             """
             <style>
             .stApp {
-            background-image: url("https://github.com/noneedanick/bonefracturedetection/blob/main/background.jpg?raw=true");
+            background-image: url("https://images.unsplash.com/photo-1530569673472-307dc017a82d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1888&q=80");
             background-size: cover;
             }
             </style>
@@ -100,28 +103,32 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
             ,
             unsafe_allow_html=True
         )
-        text_i_list=[]
-        for i,name_i in enumerate(self.names):
-            #text_i_list.append(f'id={i} \t \t name={name_i}\n')
-            text_i_list.append(f'{i}: {name_i}\n')
-        st.selectbox('Classes',tuple(text_i_list))
-        self.conf_selection=st.selectbox('Confidence Threshold',tuple([0.05,0.1,0.15,0.25,0.40]))
+        with st.sidebar:
+            text_i_list=[]
+            for i,name_i in enumerate(self.names):
+                #text_i_list.append(f'id={i} \t \t name={name_i}\n')
+                text_i_list.append(f'{i}: {name_i}\n')
+            st.selectbox('Classes',tuple(text_i_list))
+            self.conf_selection=st.selectbox('Confidence Threshold',tuple([0.05,0.1,0.15,0.25,0.40]))
         
         self.response=requests.get(self.path_img_i)
 
         self.img_screen=Image.open(BytesIO(self.response.content))
 
         st.image(self.img_screen, caption=self.capt, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
-        st.markdown('**:red[Bone fracture detection with YoloV7 with a web application.]**')
+        with st.sidebar:
+            st.markdown('**:red[Bone fracture detection with YoloV7 with a web application.]**')
         self.im0=np.array(self.img_screen.convert('RGB'))
         self.load_image_st()
-        predictions = st.button(':green[Predict on the image!]')
+        with st.sidebar:
+            predictions = st.button(':green[Predict on the image!]')
         if predictions:
             self.predict()
             predictions=False
 
     def load_image_st(self):
-        uploaded_img=st.file_uploader(label='**:red[Upload an image]**')
+        with st.sidebar:
+            uploaded_img=st.file_uploader(label='**:red[Upload an image]**')
         if type(uploaded_img) != type(None):
             self.img_data=uploaded_img.getvalue()
             st.image(self.img_data)
@@ -136,9 +143,11 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
     
     def predict(self):
         self.conf_thres=self.conf_selection
-        st.write('Loading image')
+        with st.sidebar:
+            st.write('Loading image')
         self.load_cv2mat(self.im0)
-        st.write('Making inference')
+        with st.sidebar:
+            st.write('Making inference')
         self.inference()
 
         self.img_screen=Image.fromarray(self.image).convert('RGB')
