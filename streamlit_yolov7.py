@@ -47,7 +47,7 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
         st.title(':red[Bone Fracture Detection in Appendicular X-Ray Images]')
         st.subheader(""" :red[Upload an image and run model on it.]""")
         with st.sidebar:
-            st.write(':radioactive:**:green[This model was trained to detect bone fractures on appendicular skeleton X-ray images. The model should be used with caution. It should not be used for medical decision making without an opinion from an expert radiologist.]**:radioactive:')
+            st.write(':radioactive_sign:**:green[This model was trained to detect bone fractures on appendicular skeleton X-ray images. The model should be used with caution. It should not be used for medical decision making without an opinion from an expert radiologist.]**:radioactive_sign:')
         st.markdown(
             """
         <style>
