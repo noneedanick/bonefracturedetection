@@ -169,7 +169,7 @@ if __name__=='__main__':
     path_yolov7_weights="weights/best.pt"
     path_img_i="https://github.com/noneedanick/bonefracturedetection/blob/main/test_images/fracture_elbow.jpg?raw=true"
     #INPUTS for webapp
-    app.capt="Test Image"
+    app.capt="Created by M.D. Murat Yüce and M.D. Gül Gizem Pamuk, Bağcılar Education and Research Hospital, Turkey "
     app.new_yolo_model(img_size,path_yolov7_weights,path_img_i)
     app.conf_thres=0.05
     
