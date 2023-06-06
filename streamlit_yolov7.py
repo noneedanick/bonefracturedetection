@@ -119,15 +119,15 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
             st.markdown('**:red[Please try on high resolution images for better results (higher than 1024x1024 pixel)]**')
         self.im0=np.array(self.img_screen.convert('RGB'))
         self.load_image_st()
-        with st.sidebar:
-            predictions = st.button(':green[Predict on the image!]')
+        
+        predictions = st.button(':green[Predict on the image!]')
         if predictions:
             self.predict()
             predictions=False
 
     def load_image_st(self):
-        with st.sidebar:
-            uploaded_img=st.file_uploader(label='**:red[Upload an image or try on test image]**')
+        
+        uploaded_img=st.file_uploader(label='**:red[Upload an image or try on test image]**')
         if type(uploaded_img) != type(None):
             self.img_data=uploaded_img.getvalue()
             st.image(self.img_data)
@@ -142,11 +142,11 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
     
     def predict(self):
         self.conf_thres=self.conf_selection
-        with st.sidebar:
-            st.write('Loading image')
+        
+        st.write('Loading image')
         self.load_cv2mat(self.im0)
-        with st.sidebar:
-            st.write('Making inference')
+        
+        st.write('Making inference')
         self.inference()
 
         self.img_screen=Image.fromarray(self.image).convert('RGB')
