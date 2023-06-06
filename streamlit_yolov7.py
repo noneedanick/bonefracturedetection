@@ -15,6 +15,8 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
     '''
     Streamlit app for bone fracture detection in X-ray images
     '''
+    
+
     def __init__(self,):
         self.logging_main=logging
         self.logging_main.basicConfig(level=self.logging_main.DEBUG)
@@ -91,7 +93,7 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
             """
             <style>
             .stApp {
-            background-image: url("https://images.unsplash.com/photo-1530569673472-307dc017a82d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1888&q=80");
+            background-image: url("https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");
             background-size: cover;
             }
             </style>
