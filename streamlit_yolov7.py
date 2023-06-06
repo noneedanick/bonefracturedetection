@@ -47,7 +47,7 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
         st.title(':red[Bone Fracture Detection in Appendicular X-Ray Images]')
         st.subheader(""" :red[Upload an image and run model on it.]""")
         with st.sidebar:
-            st.write('**:green[This model was trained to detect bone fractures on appendicular skeleton X-ray images. The model should be used with caution. It should not be used for medical decision making without an opinion from an expert radiologist.]**')
+            st.write(':radioactive:**:green[This model was trained to detect bone fractures on appendicular skeleton X-ray images. The model should be used with caution. It should not be used for medical decision making without an opinion from an expert radiologist.]**:radioactive:')
         st.markdown(
             """
         <style>
@@ -113,7 +113,7 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
 
         st.image(self.img_screen, caption=self.capt, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
         with st.sidebar:
-            st.markdown('**:red[Bone fracture detection with YoloV7 with a web application.]**')
+            st.markdown('**:red[Please try on high resolution images for better results (higher than 1024x1024 pixel)]**')
         self.im0=np.array(self.img_screen.convert('RGB'))
         self.load_image_st()
         with st.sidebar:
@@ -124,7 +124,7 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
 
     def load_image_st(self):
         with st.sidebar:
-            uploaded_img=st.file_uploader(label='**:red[Upload an image]**')
+            uploaded_img=st.file_uploader(label='**:red[Upload an image or try on test image]**')
         if type(uploaded_img) != type(None):
             self.img_data=uploaded_img.getvalue()
             st.image(self.img_data)
