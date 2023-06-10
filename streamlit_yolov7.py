@@ -116,7 +116,7 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
 
         st.image(self.img_screen, caption=self.capt, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
         with st.sidebar:
-            st.markdown('**:red[Please try on high resolution images for better results (higher than 1024x1024 pixel)]**')
+            st.markdown('**:red[Tips For Getting More Accurate Results: If possible convert your DICOM images into jpg or png file format. Upload images in a biggest possible resolution (eg. 2k, 3k or 4k). Dont try to predict photos taken by cellphone or other camera device from monitor. Try to predict on different angle poses of the same subject. Beware of the fact that false positive predictions can happen BUT those can easily differenciated by any clinician !]**')
         self.im0=np.array(self.img_screen.convert('RGB'))
         self.load_image_st()
         
