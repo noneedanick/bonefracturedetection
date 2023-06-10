@@ -136,7 +136,7 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
 
     def load_image_st(self):
         
-        uploaded_img=st.file_uploader(label='**:red[Upload an image or try on test image]**')
+        uploaded_img=st.file_uploader(label=':eject: **:red[Upload an image or try on test image]**')
         if type(uploaded_img) != type(None):
             self.img_data=uploaded_img.getvalue()
             st.image(self.img_data)
