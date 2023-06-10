@@ -20,4 +20,6 @@ Following confusion matrix is the result of our model on test set images:
 - Try to predict on different angle poses of the same subject
 - Beware of the fact that false positive predictions can happen BUT those can easily differenciated by any clinician !
 
-Codes are adapted from the repository of stevensmiley1989 https://github.com/stevensmiley1989/STREAMLIT_YOLOV7. 
+
+## Thanks to the open source community!
+Codes of this repository are adapted from the repository of <a href=https://github.com/stevensmiley1989>stevensmiley1989</a>  https://github.com/stevensmiley1989/STREAMLIT_YOLOV7. 
