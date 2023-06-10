@@ -120,7 +120,7 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
 
         st.image(self.img_screen, caption=self.capt, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
         with st.sidebar:
-            st.markdown('**:red[Tips For Getting More Accurate Results :bulb:]**  \n"
+            st.write('**:red[Tips For Getting More Accurate Results :bulb:]**  \n"
                         "* If possible convert your DICOM images into jpg or png file format.  \n"
                         "* Upload images in a biggest possible resolution (eg. 2k, 3k or 4k).  \n"
                         "* Dont try to predict photos taken by cellphone or other camera device from monitor.  \n"
