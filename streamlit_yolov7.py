@@ -48,7 +48,7 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
     def main(self):
         st.title(':red[Bone Fracture Detection in Appendicular X-Ray Images]')
         st.subheader(""" :red[Upload your image and run the model :rocket:]""")
-        st.write(':man-tipping-hand: Use sidebar by clicking left top > button ')
+        st.write(':man-tipping-hand: :green[Use sidebar by clicking left top > button] ')
         with st.sidebar:
             st.write(":radioactive_sign:")
             st.write("**:green[This model was trained to detect bone fractures on appendicular skeleton X-ray images]**.") 
