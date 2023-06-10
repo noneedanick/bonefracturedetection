@@ -52,8 +52,8 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
         with st.sidebar:
             st.write(":radioactive_sign:")
             st.write("**:green[This model was trained to detect bone fractures on appendicular skeleton X-ray images]**.") 
-            st.write("green[The model should be used with caution].")
-            st.write("green[It should not be used for medical decision making without an opinion from an expert radiologist.]")
+            st.write(":heavy_exclamation_mark: :green[The model should be used with caution].")
+            st.write(":heavy_exclamation_mark: :green[It should not be used for medical decision making without an opinion from an expert radiologist.]")
             st.write(":radioactive_sign:")
         st.markdown(
             """
