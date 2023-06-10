@@ -50,7 +50,11 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
         st.subheader(""" :red[Upload your image and run the model :rocket:]""")
         st.write(':man-tipping-hand: Use sidebar by clicking left top > button ')
         with st.sidebar:
-            st.write(':radioactive_sign:**:green[This model was trained to detect bone fractures on appendicular skeleton X-ray images. The model should be used with caution. It should not be used for medical decision making without an opinion from an expert radiologist.]**:radioactive_sign:')
+            st.write(":radioactive_sign:\n"
+                     "**:green[This model was trained to detect bone fractures on appendicular skeleton X-ray images]**.\n"  
+                     "green[The model should be used with caution].\n"  
+                     "green[It should not be used for medical decision making without an opinion from an expert radiologist.]\n"
+                     ":radioactive_sign:")
         st.markdown(
             """
         <style>
@@ -116,7 +120,12 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
 
         st.image(self.img_screen, caption=self.capt, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
         with st.sidebar:
-            st.markdown('**:red[Tips For Getting More Accurate Results: If possible convert your DICOM images into jpg or png file format. Upload images in a biggest possible resolution (eg. 2k, 3k or 4k). Dont try to predict photos taken by cellphone or other camera device from monitor. Try to predict on different angle poses of the same subject. Beware of the fact that false positive predictions can happen BUT those can easily differenciated by any clinician !]**')
+            st.markdown('**:red[Tips For Getting More Accurate Results :bulb:]**  \n"
+                        "* If possible convert your DICOM images into jpg or png file format.  \n"
+                        "* Upload images in a biggest possible resolution (eg. 2k, 3k or 4k).  \n"
+                        "* Dont try to predict photos taken by cellphone or other camera device from monitor.  \n"
+                        "* Try to predict on different angle poses of the same subject.  \n" 
+                        "* Beware of the fact that false positive predictions can happen BUT those can easily differenciated by any clinician !  \n")
         self.im0=np.array(self.img_screen.convert('RGB'))
         self.load_image_st()
         
