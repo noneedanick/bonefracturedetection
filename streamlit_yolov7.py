@@ -112,7 +112,7 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
                 #text_i_list.append(f'id={i} \t \t name={name_i}\n')
                 text_i_list.append(f'{i}: {name_i}\n')
             st.selectbox('Classes',tuple(text_i_list))
-            self.conf_selection=st.select_slider('Confidence Threshold',options=[0.001,0.05,0.1,0.15,0.25,0.30,0.35,0.40,0.45,0.50,0.55,0.60,0.65,0.70,0.75,0.80,0.85,0.90,0.95,0.99])
+            self.conf_selection=st.select_slider('Confidence Threshold',options=[0.05,0.1,0.15,0.25,0.30,0.35,0.40,0.45,0.50,0.55,0.60,0.65,0.70,0.75,0.80,0.85,0.90,0.95])
         
         self.response=requests.get(self.path_img_i)
 
