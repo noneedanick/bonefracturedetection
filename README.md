@@ -2,7 +2,7 @@
 
 ## How to use ?
 
-Freely accessible streamlink app link of this repository : 
+Freely accessible streamlit app link of this repository : 
 
 https://bonefracturedetection.streamlit.app/
 
