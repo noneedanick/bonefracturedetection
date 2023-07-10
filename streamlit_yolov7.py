@@ -123,6 +123,7 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
             st.write("**:red[Tips For Getting More Accurate Results :bulb:]**")
             st.write(":large_green_circle: If possible convert your DICOM images into jpg or png file format.")
             st.write(":large_green_circle: Upload images in a biggest possible resolution (eg. 2k, 3k or 4k).")
+            st.write(":large_green_circle: Predicting with cropped image of the suspected part may increase the model accuracy (You can experiment with it !.")
             st.write(":large_green_circle: Dont try to predict photos taken by cellphone or other camera device from monitor.")
             st.write(":large_green_circle: Try to predict on different angle poses of the same subject.") 
             st.write(":large_green_circle: Beware of the fact that false positive predictions can happen BUT those can easily differenciated by any clinician !")
