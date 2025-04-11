@@ -1,6 +1,7 @@
-opencv-contrib-python-headless
+opencv-python-headless==4.5.5.64 
 streamlit>=1.11.1
 torch
 torchvision
 requests
 yolov7
+Pillow
