@@ -118,7 +118,7 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
 
         self.img_screen=Image.open(BytesIO(self.response.content))
 
-        st.image(self.img_screen, caption=self.capt, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
+        st.image(self.img_screen, caption=self.capt, width=None, use_container_width=False, clamp=False, channels="RGB", output_format="auto")
         with st.sidebar:
             st.write("**:red[Tips For Getting More Accurate Results :bulb:]**")
             st.write(":large_green_circle: If possible convert your DICOM images into jpg or png file format.")
@@ -167,7 +167,7 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
                 name=str(item[0])
                 conf=str(round(100*item[-1],2))
                 self.capt=self.capt+ ' name='+name+' confidence='+conf+'%, '
-        st.image(self.img_screen, caption=self.capt, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
+        st.image(self.img_screen, caption=self.capt, width=None, use_container_width=False, clamp=False, channels="RGB", output_format="auto")
         self.image=None
     
 
