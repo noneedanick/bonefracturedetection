@@ -6,3 +6,8 @@ torchvision>=0.14.0,<0.20.0
 requests
 Pillow
 PyYAML
+matplotlib
+pandas
+seaborn
+scipy
+tqdm
