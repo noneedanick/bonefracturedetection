@@ -10,6 +10,12 @@ from io import BytesIO
 import numpy as np
 import cv2
 
+st.set_page_config(
+    page_title="Bone Fracture Detection",
+    page_icon="🦴",
+    layout="wide",
+)
+
 
 class Streamlit_YOLOV7(SingleInference_YOLOV7):
     '''
@@ -47,64 +53,24 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
         super().__init__(img_size,path_yolov7_weights,path_img_i,device_i=device_i)
     def main(self):
         st.title(':red[Bone Fracture Detection in Appendicular X-Ray Images]')
-        st.subheader(""" :red[Upload your image and run the model :rocket:]""")
-        st.write(':man-tipping-hand: :green[Use sidebar by clicking left top > button] ')
+        st.subheader(':red[Upload your image and run the model] :rocket:')
+        st.write('💁 :green[Use sidebar by clicking left top > button]')
         with st.sidebar:
-            st.write(":radioactive_sign:")
+            st.write("☢️")
             st.write("**:green[This model was trained to detect bone fractures on appendicular skeleton X-ray images]**.") 
-            st.write(":heavy_exclamation_mark: :green[The model should be used with caution].")
-            st.write(":heavy_exclamation_mark: :green[It should not be used for medical decision making without an opinion from an expert radiologist.]")
-            st.write(":radioactive_sign:")
-        st.markdown(
-            """
-        <style>
-        .reportview-container .markdown-text-container {
-            font-family: monospace;
-        }
-        .sidebar .sidebar-content {
-            background-image: linear-gradient(#2e7bcf,#2e7bcf);
-            color: black;
-        }
-        .Widget>label {
-            color: green;
-            font-family: monospace;
-        }
-        [class^="st-b"]  {
-            color: green;
-            font-family: monospace;
-        }
-        .st-bb {
-            background-color: black;
-        }
-        .st-at {
-            background-color: green;
-        }
-        footer {
-            font-family: monospace;
-        }
-        .reportview-container .main footer, .reportview-container .main footer a {
-            color: black;
-        }
-        header .decoration {
-            background-image: None);
-        }
-
-
-        </style>
-        """,
-            unsafe_allow_html=True,
-        )
+            st.write("❗ :green[The model should be used with caution].")
+            st.write("❗ :green[It should not be used for medical decision making without an opinion from an expert radiologist.]")
+            st.write("☢️")
         st.markdown(
             """
             <style>
             .stApp {
-            background-image: url("https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");
-            background-size: cover;
+                background-image: url("https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");
+                background-size: cover;
             }
             </style>
-            """
-            ,
-            unsafe_allow_html=True
+            """,
+            unsafe_allow_html=True,
         )
         with st.sidebar:
             text_i_list=[]
@@ -120,13 +86,13 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
 
         st.image(self.img_screen, caption=self.capt, width=None, use_container_width=False, clamp=False, channels="RGB", output_format="auto")
         with st.sidebar:
-            st.write("**:red[Tips For Getting More Accurate Results :bulb:]**")
-            st.write(":large_green_circle: If possible convert your DICOM images into jpg or png file format.")
-            st.write(":large_green_circle: Upload images in a biggest possible resolution (eg. 2k, 3k or 4k).")
-            st.write(":large_green_circle: Predicting with cropped image of the suspected part may increase the model accuracy (You can experiment with it !).")
-            st.write(":large_green_circle: Dont try to predict photos taken by cellphone or other camera device from monitor.")
-            st.write(":large_green_circle: Try to predict on different angle poses of the same subject.") 
-            st.write(":large_green_circle: Beware of the fact that false positive predictions can happen BUT those can easily differenciated by any clinician !")
+            st.write("**:red[Tips For Getting More Accurate Results]** :bulb:")
+            st.write("🟢 If possible convert your DICOM images into jpg or png file format.")
+            st.write("🟢 Upload images in a biggest possible resolution (eg. 2k, 3k or 4k).")
+            st.write("🟢 Predicting with cropped image of the suspected part may increase the model accuracy (You can experiment with it !).")
+            st.write("🟢 Dont try to predict photos taken by cellphone or other camera device from monitor.")
+            st.write("🟢 Try to predict on different angle poses of the same subject.") 
+            st.write("🟢 Beware of the fact that false positive predictions can happen BUT those can easily differenciated by any clinician !")
         self.im0=np.array(self.img_screen.convert('RGB'))
         self.load_image_st()
         
@@ -137,15 +103,15 @@ class Streamlit_YOLOV7(SingleInference_YOLOV7):
 
     def load_image_st(self):
         
-        uploaded_img=st.file_uploader(label=':eject: **:red[Upload an image or try on test image]**')
-        if type(uploaded_img) != type(None):
+        uploaded_img=st.file_uploader(label='⏏️ **:red[Upload an image or try on test image]**')
+        if uploaded_img is not None:
             self.img_data=uploaded_img.getvalue()
             st.image(self.img_data)
             self.im0=Image.open(BytesIO(self.img_data))#.convert('RGB')
             self.im0=np.array(self.im0)
 
             return self.im0
-        elif type(self.im0) !=type(None):
+        elif self.im0 is not None:
             return self.im0
         else:
             return None
